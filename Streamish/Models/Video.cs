@@ -12,9 +12,9 @@ namespace Streamish.Models
         public string Title { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string Url { get; set; }
 
-        public string Caption { get; set; }
+        public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
 
