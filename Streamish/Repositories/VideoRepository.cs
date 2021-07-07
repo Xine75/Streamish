@@ -144,13 +144,13 @@ namespace Streamish.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId,
-                            up.[Name], up.Email, up.ImageUrl, up.DateCreated,
+                          SELECT v.Title, v.Description, v.Url, v.DateCreated as VideoDateCreated, v.UserProfileId as VideoUserProfileId,
+                            up.[Name], up.Email, up.ImageUrl as UserProfileImageUrl, up.DateCreated as UserProfileDateCreated,
                             c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
                             FROM Video v
-                            LEFT JOIN UserProfile on up.Id = v.UserProfileId
+                            LEFT JOIN UserProfile up on up.Id = v.UserProfileId
                             LEFT JOIN Comment c on c.VideoId = v.id
-                           WHERE Id = @Id
+                           WHERE v.Id = @Id
                             ";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -159,9 +159,10 @@ namespace Streamish.Repositories
 
                     Video video = null;
                    
-                    if (reader.Read())
-                    { 
-
+                    while (reader.Read())
+                    {
+                        if (video == null)
+                        {
                             video = new Video()
                             {
                                 Id = id,
@@ -180,6 +181,7 @@ namespace Streamish.Repositories
                                 },
                                 Comments = new List<Comment>()
                             };
+                        };
 
                         //will perform the block of code only if the comment id is NOT null
                         if (DbUtils.IsNotDbNull(reader, "CommentId"))
