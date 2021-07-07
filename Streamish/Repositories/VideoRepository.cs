@@ -77,7 +77,7 @@ namespace Streamish.Repositories
                   FROM Video v 
                        JOIN UserProfile up ON v.UserProfileId = up.Id
                        LEFT JOIN Comment c on c.VideoId = v.id
-             ORDER BY  v.DateCreated
+                  ORDER BY  v.DateCreated
             ";
 
                     var reader = cmd.ExecuteReader();
