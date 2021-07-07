@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Streamish.Repositories
 {
-    public class UserProfileRepository : BaseRepository
+    public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 
