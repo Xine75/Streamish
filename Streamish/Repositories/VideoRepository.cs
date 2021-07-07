@@ -89,7 +89,7 @@ namespace Streamish.Repositories
                         //get comment.videoId
                         var videoId = DbUtils.GetInt(reader, "VideoId");
 
-                        //create an existingVideo which has a comment.videoId matching video.id
+                        //create an existingVideo with a specific video.id (called videoId)
                         var existingVideo = videos.FirstOrDefault(p => p.Id == videoId);
 
                         //if the id's don't match, keep looking for a match
@@ -136,7 +136,69 @@ namespace Streamish.Repositories
             }
         }
 
+        public Video GetVideoByIdWithComments (int id)
+        {
+            using (var conn = Connection)
+                {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                          SELECT v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId,
+                            up.[Name], up.Email, up.ImageUrl, up.DateCreated,
+                            c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
+                            FROM Video v
+                            LEFT JOIN UserProfile on up.Id = v.UserProfileId
+                            LEFT JOIN Comment c on c.VideoId = v.id
+                           WHERE Id = @Id
+                            ";
 
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Video video = null;
+                   
+                    if (reader.Read())
+                    { 
+
+                            video = new Video()
+                            {
+                                Id = id,
+                                Title = DbUtils.GetString(reader, "Title"),
+                                Description = DbUtils.GetString(reader, "Description"),
+                                DateCreated = DbUtils.GetDateTime(reader, "VideoDateCreated"),
+                                Url = DbUtils.GetString(reader, "Url"),
+                                UserProfileId = DbUtils.GetInt(reader, "VideoUserProfileId"),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = DbUtils.GetInt(reader, "VideoUserProfileId"),
+                                    Name = DbUtils.GetString(reader, "Name"),
+                                    Email = DbUtils.GetString(reader, "Email"),
+                                    DateCreated = DbUtils.GetDateTime(reader, "UserProfileDateCreated"),
+                                    ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl"),
+                                },
+                                Comments = new List<Comment>()
+                            };
+
+                        //will perform the block of code only if the comment id is NOT null
+                        if (DbUtils.IsNotDbNull(reader, "CommentId"))
+                        {
+                            video.Comments.Add(new Comment()
+                            {
+                                Id = DbUtils.GetInt(reader, "CommentId"),
+                                Message = DbUtils.GetString(reader, "Message"),
+                                VideoId = id,
+                                UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
+                            });
+                        }
+                    }
+                    reader.Close();
+
+                    return video;
+                }
+            }
+        }
 
         public Video GetById(int id)
         {
@@ -146,8 +208,10 @@ namespace Streamish.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Title, Description, Url, DateCreated, UserProfileId
-                            FROM Video
+                          SELECT v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId,
+                            up.[Name], up.Email, up.ImageUrl, up.DateCreated
+                            FROM Video v
+                            LEFT JOIN UserProfile on up.Id = Video.UserProfileId
                            WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -165,6 +229,14 @@ namespace Streamish.Repositories
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             Url = DbUtils.GetString(reader, "Url"),
                             UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "VideoUserProfileId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                DateCreated = DbUtils.GetDateTime(reader, "UserProfileDateCreated"),
+                                ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl"),
+                            },
                         };
                     }
 
