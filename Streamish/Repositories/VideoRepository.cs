@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Streamish.Models;
@@ -372,7 +373,7 @@ namespace Streamish.Repositories
                 }
             }
         }
-        public List<Video> SearchForHottest (DateTime datetime)
+        public List<Video> SearchForHottest(DateTime datetime)
         {
             using (var conn = Connection)
             {
