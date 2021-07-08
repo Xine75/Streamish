@@ -205,9 +205,8 @@ namespace Streamish.Tests
                 Id = id,
                 Name = $"User {id}",
                 Email = $"user{id}@example.com",
-                Bio = $"Bio {id}",
                 DateCreated = DateTime.Today.AddDays(-id),
-                Url = $"http://user.url/{id}",
+                ImageUrl = $"http://user.url/{id}",
             };
         }
     }
