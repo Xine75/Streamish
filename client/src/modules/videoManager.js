@@ -20,7 +20,7 @@ export const addVideo = (video) => {
 };
 
 export const searchVideos = (searchTerms) => {
-    return fetch(`${baseUrl}/search?=${searchTerms}`)
+    return fetch(`${baseUrl}/search?q=${searchTerms}`)
         .then((res) => res.json())
 
 };

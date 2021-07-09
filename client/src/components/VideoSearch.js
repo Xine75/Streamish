@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
-import { VideoSearch } from "../modules/videoManager";
+import React, { useEffect, useState } from "react";
+import { searchVideos } from "../modules/videoManager";
 
 export const VideoSearch = () => {
     const [videos, setVideos] = useState([]);
-    const { setSearchTerms } = useState();
+    const [searchTerms, setSearchTerms] = useState([]);
 
-    const searchVideos = () => {
-        VideoSearch().then(videos => setVideos(videos));
+    const findVideos = () => {
+        searchVideos()
+            .then(videos => setVideos(videos));
     };
 
     useEffect(() => {
-        searchVideos();
-    }, []);
+        findVideos(searchTerms);
+    }, [videos]);
 
     return (
         <>
@@ -21,9 +22,7 @@ export const VideoSearch = () => {
 
 
                 placeholder="Search for a Video..." />
-
-
         </>
     )
-
-}
+};
+export default VideoSearch;
