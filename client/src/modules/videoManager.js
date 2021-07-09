@@ -4,6 +4,10 @@ export const getAllVideos = () => {
     return fetch(baseUrl)
         .then((res) => res.json())
 };
+export const getAllVideosWithComments = () => {
+    return fetch(`${baseUrl}/GetWithComments`)
+        .then((res) => res.json())
+};
 
 export const addVideo = (video) => {
     return fetch(baseUrl, {
@@ -13,4 +17,10 @@ export const addVideo = (video) => {
         },
         body: JSON.stringify(video),
     });
+};
+
+export const searchVideos = (searchTerms) => {
+    return fetch(`${baseUrl}/search?=${searchTerms}`)
+        .then((res) => res.json())
+
 };
