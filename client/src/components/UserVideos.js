@@ -16,6 +16,7 @@ const UserList = () => {
     useEffect(() => {
         getVideos();
     }, []);
+    console.log("videos", videos)
 
     return (
         <div className="container">
