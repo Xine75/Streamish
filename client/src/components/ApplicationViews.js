@@ -18,6 +18,10 @@ const ApplicationViews = () => {
             <Route path="/video/commentDetail/:id">
                 <VideoDetails />
             </Route>
+
+            <Route path="/userprofile/myvideos/:id">
+                <VideoDetails />
+            </Route>
         </Switch>
     );
 };
