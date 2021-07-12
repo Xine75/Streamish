@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { addVideo, getAllVideos } from "../modules/videoManager";
 
-const VideoForm = () => {
+export const VideoForm = () => {
     const emptyVideo = {
         title: "",
         description: "",
@@ -23,7 +23,7 @@ const VideoForm = () => {
         setVideo(videoCopy);
     };
 
-    const handleSave = (evt) => {
+    const handleSave = (e) => {
         e.preventDefault();
 
         addVideo(video).then((p) => {

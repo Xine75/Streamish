@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Video from './Video';
 import { getAllVideosWithComments } from "../modules/videoManager";
 import VideoSearch from "./VideoSearch";
+import VideoForm from "./VideoForm";
 
 const VideoList = () => {
 
