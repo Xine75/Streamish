@@ -6,7 +6,7 @@ import { VideoSearch } from "./components/VideoSearch";
 function App() {
   return (
     <div className="App">
-      <VideoSearch />
+
       <VideoList />
     </div>
   );
