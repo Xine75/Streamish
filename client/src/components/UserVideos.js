@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Video from './Video';
-import { getAllVideosWithComments } from "../modules/videoManager";
+import { getMyVideos } from "../modules/videoManager";
 import VideoSearch from "./VideoSearch";
 import VideoForm from "./VideoForm";
 
-const VideoList = () => {
+const UserList = () => {
 
-    const [videos, setVideos] = useState([]);
-    const { id } = useParams();
-    var userVideos = videos.filter(v => v.userProfileId.toString() === id)
+    const [videos, setVideos] = useState();
+    const id = useParams();
+    console.log("id", id)
 
     const getVideos = () => {
-        getAllVideosWithComments().then(videos => setVideos(userVideos));
+        getMyVideos(id).then(videos => {
+            console.log("videos", videos)
+            setVideos(videos)
+        });
     };
 
     useEffect(() => {
@@ -24,7 +27,7 @@ const VideoList = () => {
             <div className="row justify-content-center">
                 <VideoSearch setVideos={setVideos} />
                 <VideoForm />
-                {videos.map((video) => (
+                {videos?.map((video) => (
                     <Video video={video} key={video.id} />
                 ))}
             </div>
@@ -32,4 +35,4 @@ const VideoList = () => {
     );
 };
 
-export default VideoList;
+export default UserList;

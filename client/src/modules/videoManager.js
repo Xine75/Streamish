@@ -27,5 +27,9 @@ export const addVideo = (video) => {
 export const searchVideos = (searchTerms) => {
     return fetch(`${baseUrl}/search?q=${searchTerms}`)
         .then((res) => res.json())
-
 };
+
+export const getMyVideos = (id) => {
+    return fetch(`/api/UserProfile/myVideos/${id}`)
+        .then((res) => res.json())
+}

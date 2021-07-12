@@ -8,6 +8,7 @@ const VideoDetails = () => {
     const [video, setVideo] = useState();
     const { id } = useParams();
 
+
     useEffect(() => {
         getVideo(id).then(setVideo);
     }, []);
@@ -22,7 +23,7 @@ const VideoDetails = () => {
                 <div className="col-sm-12 col-lg-6">
                     <Video video={video} />
                     <ListGroup>
-                        {video.comments.map((c) => (
+                        {video.comments?.map((c) => (
                             <ListGroupItem>{c.message}</ListGroupItem>
                         ))}
                     </ListGroup>

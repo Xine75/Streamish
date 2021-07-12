@@ -18,11 +18,6 @@ const Header = () => {
                         New Video
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/userprofile/myvideos/:id" className="nav-link">
-                        My Videos
-                    </Link>
-                </li>
             </ul>
         </nav>
     );

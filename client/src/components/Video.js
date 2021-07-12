@@ -1,11 +1,14 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Video = ({ video }) => {
+    var id = useParams();
     return (
         <Card >
-            <p className="text-left px-2">Posted by: {video.userProfile.name}</p>
+            <p className="text-left px-2">Posted by:
+                <Link to={`/userprofile/myvideos/${id}`}>
+                    {video.userProfile.name}</Link></p>
             <CardBody>
                 <iframe className="video"
                     src={video.url}

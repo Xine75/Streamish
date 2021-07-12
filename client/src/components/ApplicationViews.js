@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import VideoList from "./VideoList";
 import VideoForm from "./VideoForm";
 import VideoDetails from "./VideoDetails";
+import UserList from "./UserVideos";
 
 const ApplicationViews = () => {
     return (
@@ -20,7 +21,7 @@ const ApplicationViews = () => {
             </Route>
 
             <Route path="/userprofile/myvideos/:id">
-                <VideoDetails />
+                <UserList />
             </Route>
         </Switch>
     );
