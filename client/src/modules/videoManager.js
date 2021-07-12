@@ -4,9 +4,14 @@ export const getAllVideos = () => {
     return fetch(baseUrl)
         .then((res) => res.json())
 };
+
 export const getAllVideosWithComments = () => {
     return fetch(`${baseUrl}/GetWithComments`)
         .then((res) => res.json())
+};
+
+export const getVideo = (id) => {
+    return fetch(`${baseUrl}/commentDetail/${id}`).then((res) => res.json());
 };
 
 export const addVideo = (video) => {
