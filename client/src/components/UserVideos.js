@@ -10,7 +10,7 @@ const UserList = () => {
     console.log("id", id)
 
     const getVideos = () => {
-        getMyVideos(id).then(user => setUser(user));
+        getMyVideos(id).then(video => setUser(video));
     };
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const UserList = () => {
     return (
         <div className="container">
             <div className="row justify-content-center">
-                {user.video.map((video) => (
+                {user.videos.map((video) => (
                     <Video video={video} UserProfile={user} key={video.id} />
                 ))}
             </div>

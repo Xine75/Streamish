@@ -85,8 +85,8 @@ namespace Streamish.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT up.Name, up.Email, up.ImageUrl, up.DateCreated,
-                            v.Id as VideoId, v.Title, v.Description, v.Url, v.DateCreated
+                   SELECT up.Id, up.Name, up.Email, up.ImageUrl, up.DateCreated,
+                            v.Id as VideoId, v.Title, v.Description, v.Url, v.DateCreated as VideoDateCreated
                             FROM UserProfile up
                             LEFT JOIN Video v on up.Id = v.UserProfileId
                             WHERE up.Id = @Id
