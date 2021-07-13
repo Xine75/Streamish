@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Video = ({ video }) => {
 

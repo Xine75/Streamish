@@ -5,24 +5,24 @@ import { getMyVideos } from "../modules/videoManager";
 
 const UserList = () => {
 
-    const [videos, setVideos] = useState([]);
+    const [user, setUser] = useState({});
     const { id } = useParams();
     console.log("id", id)
 
     const getVideos = () => {
-        getMyVideos(id).then(videos => setVideos(videos));
+        getMyVideos(id).then(user => setUser(user));
     };
 
     useEffect(() => {
         getVideos();
     }, []);
-    console.log("videos", videos)
+    console.log("user", user)
 
     return (
         <div className="container">
             <div className="row justify-content-center">
-                {videos?.map((video) => (
-                    <Video video={video} key={video.id} />
+                {user.video.map((video) => (
+                    <Video video={video} UserProfile={user} key={video.id} />
                 ))}
             </div>
         </div>
