@@ -34,6 +34,43 @@ namespace Streamish.Tests
             Assert.Equal(users, actualUsers);
         }
 
+        [Fact]
+        public void Get_By_Id_Returns_NotFound_When_Given_Unknown_Id()
+        {
+            //Arrange
+            var users = new List<UserProfile>(); //no users
+
+            var repo = new InMemoryUserRepository(users);
+            var controller = new UserProfileController(repo);
+
+            //Act
+            var result = controller.Get(1);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void Get_By_Id_Returns_User_With_Given_Id()
+        {
+            //Arrange
+            var testUserId = 99;
+            var users = CreateTestUsers(5);
+            users[0].Id = testUserId; //Make sure we know the Id of one of the users
+
+            var repo = new InMemoryUserRepository(users);
+            var controller = new UserProfileController(repo);
+
+            //Act
+            var result = controller.Get(testUserId);
+
+            //Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var actualUser = Assert.IsType<UserProfile>(okResult.Value);
+
+            Assert.Equal(testUserId, actualUser.Id);
+        }
+
         private List<UserProfile>CreateTestUsers(int count)
         {
             var users = new List<UserProfile>();
