@@ -64,5 +64,10 @@ namespace Streamish.Tests.Mocks
             currentUser.ImageUrl = user.ImageUrl;
             currentUser.DateCreated = user.DateCreated;
         }
+
+        public UserProfile GetUserByIdWithVideos (int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
